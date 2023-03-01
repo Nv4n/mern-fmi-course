@@ -1,0 +1,16 @@
+{
+  "name": "fmi-2023-js-intro",
+  "version": "1.0.0",
+  "description": "js-intro",
+  "main": "index.js",
+  "author": "I^4n",
+  "license": "Apache-2.0",
+  "scripts": {
+    "dev": "lite-server",
+    "api": "json-server --port 9000 --routes routes.json --watch db.json"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.2",
+    "lite-server": "^2.6.1"
+  }
+}

@@ -1,6 +1,7 @@
 let x = 5;
 setTimeout(() => {
-    debugger;
-    console.log('world');
+	// eslint-disable-next-line no-debugger
+	debugger;
+	console.log('world');
 }, 1000);
 console.log('hello', x);
