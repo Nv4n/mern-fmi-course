@@ -1,0 +1,29 @@
+{
+  "name": "fmi-2023-04-ts-lab",
+  "description": "intro in typescript",
+  "scripts": {
+    "dev": "concurrently --kill-others \"npx tsc -w\" \"lite-server\""
+  },
+  "author": {
+    "name": "I^4n"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "concurrently": "^7.6.0",
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-import": "^2.27.5",
+    "lite-server": "^2.6.1",
+    "prettier": "^2.8.6",
+    "tsconfig.json": "^1.0.11",
+    "typescript": "^5.0.2"
+  },
+  "lint": "eslint \"ts/**/*.{js,jsx,ts,tsx}\" --quiet",
+  "typecheck": "tsc --noEmit"
+}

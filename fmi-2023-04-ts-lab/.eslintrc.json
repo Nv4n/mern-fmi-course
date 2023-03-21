@@ -1,0 +1,44 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:import/errors",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "prettier"
+    ],
+    "rules": {
+        "@typescript-eslint/no-empty-function": 0,
+        "@typescipt-eslint/no-empty-interface": 0,
+        "no-case-declarations": "off"
+    },
+    "plugins": [
+        "import",
+        "@typescript-eslint"
+    ],
+    "parser": "@typescript-eslint",
+    "parserOptions": {
+        "ecmaVersion": 2022,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true
+    },
+    "settings": {
+        "settings": {
+            "import/parsers": {
+                "@typescript-eslint/parser": [
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "import/resolver": {
+                "typescript": {
+                    "alwaysTryTypes": true
+                }
+            }
+        }
+    }
+}
