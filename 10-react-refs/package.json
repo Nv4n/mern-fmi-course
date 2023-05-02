@@ -1,34 +1,23 @@
 {
-  "name": "fmi-2023-05-blogs-lab",
+  "name": "07-react-refs-lab4",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
-    "@types/jest": "^29.5.1",
-    "@types/node": "^18.16.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "materialize-css": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^5.0.4",
-    "web-vitals": "^3.3.1"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "api": "json-server db.json --routes routes.json --port 9000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -41,9 +30,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/materialize-css": "^1.0.11",
-    "json-server": "^0.17.3"
   }
 }
