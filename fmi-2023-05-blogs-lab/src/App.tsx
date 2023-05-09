@@ -1,25 +1,40 @@
+import React, { EffectCallback, Fragment, useEffect, useState } from "react";
 import M from "materialize-css";
-import { useEffect, useState } from "react";
 import PostsList from "./components/PostsList";
-import { Post } from "./model/posts";
 import { PostsClientService } from "./services/posts-service";
+import { Post, PostCreateDto } from "./model/posts";
+import useEffectOnMount from "./hooks/useEffectOnMount";
+import useAsyncEffect from "./hooks/useAsyncEffect";
+import PostForm from "./components/PostForm";
 
-const App = () => {
+type Props = {};
+
+const App = (props: Props) => {
 	const [posts, setPosts] = useState<Post[]>([]);
 	const [showForm, setShowForm] = useState<boolean>(false);
-	useEffect(() => {
-		const callback = async () => {
+	useAsyncEffect(
+		async () => {
+			console.log("Invoking custom hook callback.");
 			M.AutoInit();
 			try {
 				const allPosts = await PostsClientService.findAll();
 				console.log(allPosts);
 				setPosts(allPosts);
+				return allPosts;
 			} catch (err) {
 				console.log(err);
 			}
-		};
-		callback();
-	}, []);
+		},
+		[],
+		(oldPosts) =>
+			console.log(`Cleaning ${oldPosts ? oldPosts.length : 0} old posts.`)
+	);
+
+	async function addPost(post: PostCreateDto) {
+		const created = await PostsClientService.create(post);
+		setPosts(posts.concat(created));
+	}
+
 	return (
 		<>
 			<nav className="light-blue lighten-1" role="navigation">
@@ -74,9 +89,10 @@ const App = () => {
 			<div className="container">
 				{showForm && (
 					<div className="section">
-						<div className="row">
-							<h2>Add Post Form</h2>
-						</div>
+						<PostForm
+							onSubmit={addPost}
+							onCancel={() => setShowForm(false)}
+						/>
 					</div>
 				)}
 

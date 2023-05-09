@@ -10,7 +10,9 @@ export default function VideoPlayerApp() {
 		}
 	};
 	const handlePause = () => {
-		videoRef.current?.pause();
+		if (videoRef.current) {
+			videoRef.current.pause();
+		}
 	};
 	return (
 		<div className="App">

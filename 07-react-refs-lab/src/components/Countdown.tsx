@@ -6,27 +6,36 @@ export type CountdownHandle = {
 	focus: () => void;
 };
 
-type CountdownProps = {};
+type CountdownProps = {
+	start?: number;
+};
 
-const Countdown = forwardRef<CountdownHandle, CountdownProps>((props, ref) => {
-	const inputRef = useRef<HTMLInputElement>(null);
+const Countdown = forwardRef<CountdownHandle, CountdownProps>(
+	({ start = 0 }, ref) => {
+		const inputRef = useRef<HTMLInputElement>(null);
+		useImperativeHandle(
+			ref,
+			() => ({
+				// start() has type inference here
+				start() {
+					alert(`Start ${start}`);
+				},
+				focus() {
+					if (inputRef.current) {
+						inputRef.current.focus();
+					}
+				},
+			}),
+			[start]
+		);
 
-	useImperativeHandle(ref, () => ({
-		// start() has type inference here
-		start() {
-			alert("Start");
-		},
-		focus() {
-			inputRef.current?.focus();
-		},
-	}));
-
-	return (
-		<div>
-			<h2>Countdown</h2>
-			<input ref={inputRef} />
-		</div>
-	);
-});
+		return (
+			<div>
+				<h2>Countdown</h2>
+				<input ref={inputRef} />
+			</div>
+		);
+	}
+);
 
 export default Countdown;
