@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
 
-export const Navigation = () => {
+export const NavBar = () => {
 	return (
-		<>
+		<nav>
 			<NavLink
-				to="/"
+				to="/home"
 				className={({ isActive, isPending }) =>
 					isPending ? "pending" : isActive ? "active" : ""
 				}
@@ -19,6 +19,6 @@ export const Navigation = () => {
 			>
 				About us
 			</NavLink>
-		</>
+		</nav>
 	);
 };
