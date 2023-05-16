@@ -1,7 +1,28 @@
-import React, { FormEvent, useState } from "react";
-import TextInput from "./TextInput";
+import { FormEvent, useState } from "react";
+import {
+	Control,
+	FieldError,
+	FieldPath,
+	FieldValues,
+	Merge,
+	Path,
+	RegisterOptions,
+} from "react-hook-form";
 import { PostCreateDto } from "../model/posts";
 import "./PostForm.css";
+import TextInputRHF from "./TextInputRHF";
+
+interface FormInputTextProps<TFieldValues extends FieldValues> {
+	name: Path<TFieldValues>;
+	control: Control<TFieldValues, any>;
+	label: string;
+	rules?: Omit<
+		RegisterOptions<TFieldValues, FieldPath<TFieldValues>>,
+		"valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
+	>;
+	disabled?: boolean;
+	error?: Merge<FieldError, (FieldError | undefined)[]> | undefined;
+}
 
 type Props = {
 	onSubmit: (post: PostCreateDto) => void;
@@ -34,10 +55,18 @@ const PostForm = ({ onSubmit, onCancel }: Props) => {
 	}
 	return (
 		<form onSubmit={handleSubmit}>
-			<TextInput name="Title" value={title} onChange={setTitle} />
-			<TextInput name="Tags" value={tags} onChange={setTags} />
-			<TextInput name="Content" value={content} onChange={setContent} />
-			<TextInput name="Image" value={imageUrl} onChange={setImageUrl} />
+			<TextInputRHF name="Title" value={title} onChange={setTitle} />
+			<TextInputRHF name="Tags" value={tags} onChange={setTags} />
+			<TextInputRHF
+				name="Content"
+				value={content}
+				onChange={setContent}
+			/>
+			<TextInputRHF
+				name="Image"
+				value={imageUrl}
+				onChange={setImageUrl}
+			/>
 			<div className="PostForm-button-panel">
 				<button
 					className="btn waves-effect waves-light"
