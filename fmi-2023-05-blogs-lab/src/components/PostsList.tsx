@@ -1,4 +1,3 @@
-import React from 'react'
 import { Post } from '../model/posts';
 import PostItem from './PostItem';
 
