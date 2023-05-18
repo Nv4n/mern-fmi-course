@@ -2,47 +2,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useId } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { UserObjSchema } from "../model/User";
-
-const UserRegisterSchema = UserObjSchema.pick({
-	username: true,
-	password: true,
-})
-	.extend({
-		repassword: z.string().nonempty(),
-	})
-	.required()
-	.refine(
-		(data) => {
-			const { username } = data;
-			return !!username;
-		},
-		{
-			message: "Must be at least 1 symbol",
-			path: ["username"],
-		}
-	)
-	.refine(
-		(data) => {
-			const { password } = data;
-			return !!password;
-		},
-		{
-			message: "Must be at least 1 symbol",
-			path: ["password"],
-		}
-	)
-	.refine(
-		(data) => {
-			const { password, repassword } = data;
-			return password === repassword;
-		},
-		{
-			message: "repassword must be the same as password",
-			path: ["repassword"],
-		}
-	);
+import { type z } from "zod";
+import { UserRegisterSchema } from "../model/UserFormTypes";
 
 type FormUser = z.infer<typeof UserRegisterSchema>;
 

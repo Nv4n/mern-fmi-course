@@ -18,18 +18,24 @@ import maleSVG from "../static/male.svg";
 export const UserObjSchema = z.object({
 	id: z.string().uuid().max(24),
 	name: z.string(),
-	username: z.string().regex(/\w+/).max(15),
+	username: z
+		.string()
+		.max(15, "Max length should be 15")
+		.regex(/^\w+$/, "Use only word characters"),
 	password: z
 		.string()
-		.regex(/^(?=.*\d)(?=.*[^\da-zA-Zа-я А-я]).{8,}$/)
-		.min(8),
+		.min(8, "Must be at least 8 symbols")
+		.regex(
+			/^(?=.*[0-9])(?=.*[^0-9a-zA-Zа-я А-я]).{8,}$/,
+			"Must have at least 1 digit and symbol"
+		),
 	gender: z.enum(["female", "male"]),
 	role: z.enum(["user", "admin"]),
 	avatar: z.string().url().or(z.string()),
 	description: z.string().max(512),
 	validationStatus: z.enum(["active", "suspended", "deactivated"]),
-	registration: z.date().default(() => new Date()),
-	lastUpdated: z.date().default(() => new Date()),
+	registeredAt: z.date().default(() => new Date()),
+	lastUpdatedAt: z.date().default(() => new Date()),
 });
 
 export const UserSchema = UserObjSchema.refine(

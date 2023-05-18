@@ -3,22 +3,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useId } from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
-import { UserObjSchema } from "../model/User";
+import { UserLoginSchema } from "../model/UserFormTypes";
 
-const UserFormSchema = UserObjSchema.pick({
-	username: true,
-	password: true,
-})
-	.required()
-	.refine(
-		(data) => {
-			const { username, password } = data;
-			return !!username && !!password;
-		},
-		{ message: "Must contain at least one symbol" }
-	);
-
-type FormUser = z.infer<typeof UserFormSchema>;
+type FormUser = z.infer<typeof UserLoginSchema>;
 
 export const LoginForm = () => {
 	const {
@@ -26,7 +13,7 @@ export const LoginForm = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<FormUser>({
-		resolver: zodResolver(UserFormSchema),
+		resolver: zodResolver(UserLoginSchema),
 		mode: "onTouched",
 	});
 
@@ -45,7 +32,11 @@ export const LoginForm = () => {
 				<p>{errors.username?.message}</p>
 				<br></br>
 				<label htmlFor={passId}>Password:</label>
-				<input id={passId} {...register("password")}></input>
+				<input
+					id={passId}
+					type="password"
+					{...register("password")}
+				></input>
 				<p>{errors.password?.message}</p>
 				<br></br>
 				<button type="submit">SUBMIT</button>
