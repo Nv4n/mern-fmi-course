@@ -40,7 +40,7 @@ export const UserRegisterSchema = UserLoginSchema.and(
 		return password === repassword;
 	},
 	{
-		message: "repassword must be the same as password",
+		message: "Re-Password must be the same as password",
 		path: ["repassword"],
 	}
 );

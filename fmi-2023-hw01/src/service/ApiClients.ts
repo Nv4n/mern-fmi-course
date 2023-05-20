@@ -1,4 +1,3 @@
-import crypto from "crypto";
 import { type User, UserSchema } from "../model/User";
 import maleSVG from "../static/male.svg";
 
@@ -52,7 +51,7 @@ export const UserApiHandler: UserApi = {
 		password: string
 	): Promise<ApiResponse<User>> {
 		const result = UserSchema.safeParse({
-			id: crypto.randomUUID().slice(0, 24),
+			id: generateUUID(24),
 			name: "Default Name",
 			username: username,
 			password: password,
@@ -83,21 +82,7 @@ export const UserApiHandler: UserApi = {
 			return { success: false, error: "Failed request" };
 		}
 	},
-	findUserById: function (id: string): Promise<
-		ApiResponse<{
-			id: string;
-			name: string;
-			username: string;
-			password: string;
-			gender: "female" | "male";
-			role: "user" | "admin";
-			avatar: string;
-			description: string;
-			validationStatus: "active" | "suspended" | "deactivated";
-			registeredAt: Date;
-			lastUpdatedAt: Date;
-		}>
-	> {
+	findUserById: function (id: string): Promise<ApiResponse<User>> {
 		throw new Error("Function not implemented.");
 	},
 };
@@ -113,3 +98,16 @@ const handleRequest = async <D>(url: string, options?: RequestInit) => {
 		return Promise.reject(err);
 	}
 };
+
+function generateUUID(length: number): string {
+	const characters =
+		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	const charactersLength = characters.length;
+	let uuid = "";
+
+	for (let i = 0; i < length; i++) {
+		uuid += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}
+
+	return uuid;
+}

@@ -2,10 +2,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { type z } from "zod";
 import { UserRegisterSchema } from "../model/UserFormTypes";
-import { UserApiHandler } from "../service/ApiClient";
-import { redirect } from "react-router-dom";
+import { UserApiHandler } from "../service/ApiClients";
 
 type FormUser = z.infer<typeof UserRegisterSchema>;
 
@@ -18,12 +18,14 @@ export const RegisterForm = () => {
 		resolver: zodResolver(UserRegisterSchema),
 		mode: "onTouched",
 	});
+	const navigate = useNavigate();
 	const [respErrorMsg, setRespErrorMsg] = useState<string | null>(null);
 
 	const onSubmit = async (data: FormUser) => {
 		const resp = await UserApiHandler.findUser(data.username);
 		if (resp.success === true) {
 			setRespErrorMsg("Username is already taken!");
+			return;
 		}
 
 		const userResp = await UserApiHandler.createUser(
@@ -39,7 +41,7 @@ export const RegisterForm = () => {
 				JSON.stringify(userResp.data)
 			);
 
-			redirect("/");
+			navigate("/");
 		}
 	};
 	const usernameId = useId();

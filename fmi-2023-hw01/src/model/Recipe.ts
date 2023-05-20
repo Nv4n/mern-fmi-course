@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { UserObjSchema } from "./User";
 // Recipe requirements
 // идентификатор на рецептата (до 24 символа);
 // идентификатор на потребителя споделил рецептата (до 24 символа);
@@ -13,8 +14,11 @@ import { z } from "zod";
 // дата и час на последна модификация (генерира се автоматично);
 
 export const RecipeSchema = z.object({
-	id: z.string().uuid().max(24),
-	authorId: z.string().uuid().max(24),
+	id: z
+		.string()
+		.max(24)
+		.regex(/^[a-zA-Z0-9]{24}$/gm),
+	authorId: UserObjSchema.shape.id,
 	title: z.string().max(80),
 	shortDescription: z.string().max(256),
 	cookingTime: z.number().positive().finite().safe(),

@@ -4,7 +4,8 @@ import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
 import { UserLoginSchema } from "../model/UserFormTypes";
-import { UserApiHandler } from "../service/ApiClient";
+import { UserApiHandler } from "../service/ApiClients";
+import { useNavigate } from "react-router-dom";
 
 type FormUser = z.infer<typeof UserLoginSchema>;
 
@@ -17,7 +18,7 @@ export const LoginForm = () => {
 		resolver: zodResolver(UserLoginSchema),
 		mode: "onTouched",
 	});
-
+	const navigate = useNavigate();
 	const [respErrorMsg, setRespErrorMsg] = useState<string | null>(null);
 
 	const usernameId = useId();
@@ -28,7 +29,8 @@ export const LoginForm = () => {
 		if (resp.success === false) {
 			setRespErrorMsg(resp.error);
 		} else {
-			sessionStorage.setItem("activeUser", JSON.stringify(resp.data));
+			sessionStorage.setItem("active-user", JSON.stringify(resp.data));
+			navigate("/");
 		}
 	};
 
@@ -37,7 +39,7 @@ export const LoginForm = () => {
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<label htmlFor={usernameId}>Username:</label>
 				<input id={usernameId} {...register("username")}></input>
-				<p>{errors.password?.message}</p>
+				<p>{errors.username?.message}</p>
 				<br></br>
 				<label htmlFor={passId}>Password:</label>
 				<input

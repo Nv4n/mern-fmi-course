@@ -15,10 +15,11 @@ import maleSVG from "../static/male.svg";
 // дата и час на регистрация (генерира се автоматично);
 // дата и час на последна модификация (генерира се автоматично);
 
-
-
 export const UserObjSchema = z.object({
-	id: z.string().uuid().max(24),
+	id: z
+		.string()
+		.max(24)
+		.regex(/^[a-zA-Z0-9]{24}$/gm),
 	name: z.string(),
 	username: z
 		.string()
