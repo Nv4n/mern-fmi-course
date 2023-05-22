@@ -1,17 +1,19 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext, useEffect, useId } from "react";
+import { useContext, useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { type z } from "zod";
 import { RecipeFormSchema } from "../model/RecipeFormTypes";
 import { ActiveUserContext } from "../pages/Layout";
-import { RecipeSchema } from "../model/Recipe";
+import { RecipeApiHandler } from "../service/RecipeApi";
 
 export type FormRecipe = z.infer<typeof RecipeFormSchema>;
 
 export const RecipeForm = () => {
+	const [respErrorMsg, setRespErrorMsg] = useState<string | null>(null);
 	const navigate = useNavigate();
 	const activeUser = useContext(ActiveUserContext);
+
 	useEffect(() => {
 		if (!activeUser) {
 			navigate("/");
@@ -26,11 +28,6 @@ export const RecipeForm = () => {
 		resolver: zodResolver(RecipeFormSchema),
 		mode: "onTouched",
 	});
-
-	const onSubmit = (data: FormRecipe) => {
-		
-	};
-
 	const generateInput = (
 		label: string,
 		field: keyof FormRecipe,
@@ -56,6 +53,21 @@ export const RecipeForm = () => {
 			</>
 		);
 	};
+
+	const onSubmit = async (data: FormRecipe) => {
+		if (!activeUser) {
+			setRespErrorMsg("No active user");
+			return;
+		}
+		const resp = await RecipeApiHandler.createRecipe(data, activeUser.id);
+		if (resp.success === false) {
+			setRespErrorMsg(resp.error);
+			return;
+		}
+
+		navigate("/");
+	};
+
 	return (
 		<>
 			{/* eslint-disable @typescript-eslint/no-misused-promises */}
@@ -73,6 +85,7 @@ export const RecipeForm = () => {
 					"textArea"
 				)}
 				{generateInput("Tags", "tags")}
+				<p>{respErrorMsg}</p>
 				<button type="submit">SUBMIT</button>
 			</form>
 		</>

@@ -1,15 +1,26 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useId, useState } from "react";
+import { useContext, useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { type z } from "zod";
 import { UserRegisterSchema } from "../model/UserFormTypes";
 import { ACTIVE_USER_KEY } from "../model/User";
 import { UserApiHandler } from "../service/UserApi";
+import { ActiveUserContext } from "../pages/Layout";
 
 type FormUser = z.infer<typeof UserRegisterSchema>;
 
 export const RegisterForm = () => {
+	const [respErrorMsg, setRespErrorMsg] = useState<string | null>(null);
+	const navigate = useNavigate();
+	const activeUser = useContext(ActiveUserContext);
+
+	useEffect(() => {
+		if (activeUser) {
+			navigate("/");
+		}
+	}, [activeUser]);
+
 	const {
 		register,
 		handleSubmit,
@@ -18,8 +29,6 @@ export const RegisterForm = () => {
 		resolver: zodResolver(UserRegisterSchema),
 		mode: "onTouched",
 	});
-	const navigate = useNavigate();
-	const [respErrorMsg, setRespErrorMsg] = useState<string | null>(null);
 
 	const onSubmit = async (data: FormUser) => {
 		const resp = await UserApiHandler.findUser(data.username);

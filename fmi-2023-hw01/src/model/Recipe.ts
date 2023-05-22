@@ -29,20 +29,23 @@ export const RecipeSchema = z.object({
 					.success;
 			},
 			{ message: "Cooking time is out of range" }
-		),
+		)
+		.or(z.number().positive().finite().safe()),
 	products: z
 		.string()
 		.regex(
 			/^(\w+, )*\w+$/,
 			"Products must be in format: product1, product2"
 		)
-		.transform((val) => val.split(", ")),
+		.transform((val) => val.split(", "))
+		.or(z.array(z.string())),
 	cookedImg: z.string().url(),
 	description: z.string().max(2048),
 	tags: z
 		.string()
 		.regex(/^(\w+, )*\w+$/, "Tags must be in format: tag1, tag2")
-		.transform((val) => val.split(", ")),
+		.transform((val) => val.split(", "))
+		.or(z.array(z.string())),
 	publishedAt: z.date().default(() => new Date()),
 	lastUpdated: z.date().default(() => new Date()),
 });

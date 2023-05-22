@@ -8,6 +8,7 @@ import { LoginForm } from "./components/LoginForm";
 import { RecipeForm } from "./components/RecipeForm";
 import { RegisterForm } from "./components/RegisterForm";
 import { Layout } from "./pages/Layout";
+import { RecipePage } from "./pages/RecipesPage";
 
 const router = createBrowserRouter([
 	{

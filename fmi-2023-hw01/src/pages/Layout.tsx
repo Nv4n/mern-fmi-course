@@ -1,6 +1,7 @@
 import { createContext } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ACTIVE_USER_KEY, type User } from "../model/User";
+import { RecipePage } from "./RecipesPage";
 
 export const ActiveUserContext = createContext<User | null>(null);
 export const Layout = () => {
@@ -11,6 +12,7 @@ export const Layout = () => {
 	}
 
 	const navigate = useNavigate();
+	const { pathname } = useLocation();
 
 	return (
 		<ActiveUserContext.Provider value={user}>
@@ -18,6 +20,7 @@ export const Layout = () => {
 				{user ? (
 					<>
 						<button
+							className="nav-link"
 							onClick={() => {
 								sessionStorage.removeItem("active-user");
 								navigate("/");
@@ -29,8 +32,12 @@ export const Layout = () => {
 					</>
 				) : (
 					<>
-						<Link to={"/login"}>Login</Link>{" "}
-						<Link to={"/register"}>Register</Link>
+						<Link className="nav-link" to={"/login"}>
+							Login
+						</Link>{" "}
+						<Link className="nav-link" to={"/register"}>
+							Register
+						</Link>
 					</>
 				)}
 				{user && (
@@ -41,6 +48,8 @@ export const Layout = () => {
 						<img src={user.avatar} alt="Avatar image"></img>
 					</div>
 				)}
+
+				{pathname === "/" ? <RecipePage></RecipePage> : null}
 
 				<Outlet></Outlet>
 			</div>

@@ -22,7 +22,7 @@ export const UserApiHandler: UserApi = {
 			const users = await handleRequest<User[]>(`${BASE_API_URL}/users`);
 
 			if (!users) {
-				return { success: false, error: "Failed request" };
+				return { success: false, error: "No users found" };
 			}
 			const user = users.find((u) => u.username === username);
 
@@ -30,6 +30,27 @@ export const UserApiHandler: UserApi = {
 				return {
 					success: false,
 					error: "Username or password are wrong",
+				};
+			}
+
+			return { success: true, data: user };
+		} catch (err) {
+			return { success: false, error: "Failed request" };
+		}
+	},
+	findUserById: async function (id: string): Promise<ApiResponse<User>> {
+		try {
+			const users = await handleRequest<User[]>(`${BASE_API_URL}/users`);
+
+			if (!users) {
+				return { success: false, error: "No users found" };
+			}
+			const user = users.find((u) => u.id === id);
+
+			if (!user) {
+				return {
+					success: false,
+					error: "No such user",
 				};
 			}
 
@@ -74,8 +95,5 @@ export const UserApiHandler: UserApi = {
 		} catch (err) {
 			return { success: false, error: "Failed request" };
 		}
-	},
-	findUserById: function (id: string): Promise<ApiResponse<User>> {
-		throw new Error("Function not implemented.");
 	},
 };
