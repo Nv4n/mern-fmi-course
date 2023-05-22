@@ -50,16 +50,6 @@ export const RecipeFormSchema = RecipeSchema.omit({
 	)
 	.refine(
 		(data) => {
-			const { cookedImg } = data;
-			return !!cookedImg;
-		},
-		{
-			message: nonemptyMsg,
-			path: ["cookingTime"],
-		}
-	)
-	.refine(
-		(data) => {
 			const { description } = data;
 			return !!description;
 		},

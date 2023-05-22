@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { type z } from "zod";
 import { RecipeFormSchema } from "../model/RecipeFormTypes";
 import { ActiveUserContext } from "../pages/Layout";
+import { RecipeSchema } from "../model/Recipe";
 
-type FormRecipe = z.infer<typeof RecipeFormSchema>;
+export type FormRecipe = z.infer<typeof RecipeFormSchema>;
 
 export const RecipeForm = () => {
 	const navigate = useNavigate();
@@ -27,7 +28,7 @@ export const RecipeForm = () => {
 	});
 
 	const onSubmit = (data: FormRecipe) => {
-		console.log(data);
+		
 	};
 
 	const generateInput = (
@@ -43,7 +44,12 @@ export const RecipeForm = () => {
 				{inputType ? (
 					<textarea {...register(field)} id={id} />
 				) : (
-					<input {...register(field)} id={id} type={fieldType} />
+					<input
+						{...register(field)}
+						id={id}
+						min={1}
+						type={fieldType}
+					/>
 				)}
 				<p>{errors[field]?.message}</p>
 				<br></br>

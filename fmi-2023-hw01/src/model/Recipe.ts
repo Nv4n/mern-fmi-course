@@ -22,18 +22,14 @@ export const RecipeSchema = z.object({
 	shortDescription: z.string().max(256),
 	cookingTime: z
 		.string()
-		.transform((val) => Number.parseInt(val))
+		.transform((val) => parseInt(val))
 		.refine(
 			(val) => {
-				if (
-					!z.number().positive().finite().safe().safeParse(val)
-						.success
-				) {
-				}
+				return z.number().positive().finite().safe().safeParse(val)
+					.success;
 			},
-			{ message: "Is not positive number" }
-		)
-		.or(z.number().positive().finite().safe()),
+			{ message: "Cooking time is out of range" }
+		),
 	products: z
 		.string()
 		.regex(
