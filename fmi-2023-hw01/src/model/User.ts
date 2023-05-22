@@ -19,7 +19,7 @@ export const UserObjSchema = z.object({
 	id: z
 		.string()
 		.max(24)
-		.regex(/^[a-zA-Z0-9]{24}$/gm),
+		.regex(/^[a-zA-Z0-9]{1,24}$/),
 	name: z.string(),
 	username: z
 		.string()
@@ -64,3 +64,4 @@ export const UserSchema = UserObjSchema.refine(
 );
 
 export type User = z.infer<typeof UserSchema>;
+export const ACTIVE_USER_KEY = "active-user";

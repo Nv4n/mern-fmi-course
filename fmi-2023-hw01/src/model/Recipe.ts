@@ -12,20 +12,41 @@ import { UserObjSchema } from "./User";
 // ключови думи - tags (списък от тагове);
 // дата и час на споделяне (генерира се автоматично);
 // дата и час на последна модификация (генерира се автоматично);
-
 export const RecipeSchema = z.object({
 	id: z
 		.string()
 		.max(24)
-		.regex(/^[a-zA-Z0-9]{24}$/gm),
+		.regex(/^[a-zA-Z0-9]{1,24}$/),
 	authorId: UserObjSchema.shape.id,
 	title: z.string().max(80),
 	shortDescription: z.string().max(256),
-	cookingTime: z.number().positive().finite().safe(),
-	products: z.array(z.string()),
+	cookingTime: z
+		.string()
+		.transform((val) => Number.parseInt(val))
+		.refine(
+			(val) => {
+				if (
+					!z.number().positive().finite().safe().safeParse(val)
+						.success
+				) {
+				}
+			},
+			{ message: "Is not positive number" }
+		)
+		.or(z.number().positive().finite().safe()),
+	products: z
+		.string()
+		.regex(
+			/^(\w+, )*\w+$/,
+			"Products must be in format: product1, product2"
+		)
+		.transform((val) => val.split(", ")),
 	cookedImg: z.string().url(),
 	description: z.string().max(2048),
-	tags: z.array(z.string()),
+	tags: z
+		.string()
+		.regex(/^(\w+, )*\w+$/, "Tags must be in format: tag1, tag2")
+		.transform((val) => val.split(", ")),
 	publishedAt: z.date().default(() => new Date()),
 	lastUpdated: z.date().default(() => new Date()),
 });

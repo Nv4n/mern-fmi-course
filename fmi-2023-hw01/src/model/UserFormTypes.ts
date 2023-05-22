@@ -3,6 +3,7 @@ import { UserObjSchema } from "./User";
 
 const nonemptyMsg = "Must be at least 1 symbol";
 
+
 export const UserLoginSchema = UserObjSchema.pick({
 	username: true,
 	password: true,

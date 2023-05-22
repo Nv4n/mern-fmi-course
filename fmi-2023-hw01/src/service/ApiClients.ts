@@ -50,8 +50,9 @@ export const UserApiHandler: UserApi = {
 		username: string,
 		password: string
 	): Promise<ApiResponse<User>> {
+		const uuid = generateUUID(24);
 		const result = UserSchema.safeParse({
-			id: generateUUID(24),
+			id: uuid,
 			name: "Default Name",
 			username: username,
 			password: password,
@@ -65,7 +66,7 @@ export const UserApiHandler: UserApi = {
 		});
 
 		if (result.success === false) {
-			return { success: false, error: "Failed request" };
+			return { success: false, error: result.error.message };
 		}
 		const entity = result.data satisfies User;
 

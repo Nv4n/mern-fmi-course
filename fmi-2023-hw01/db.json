@@ -1,4 +1,18 @@
 {
-  "users": [],
+  "users": [
+    {
+      "id": "n6s47m1c5ek9WjOqgszCrqv7",
+      "name": "Default Name",
+      "username": "gosho",
+      "password": "1234admin^",
+      "gender": "male",
+      "role": "user",
+      "avatar": "/static/media/male.214c16495943ca762a6f17d3c0e48923.svg",
+      "description": "no description",
+      "validationStatus": "active",
+      "registeredAt": "2023-05-22T13:01:08.239Z",
+      "lastUpdatedAt": "2023-05-22T13:01:08.239Z"
+    }
+  ],
   "recipes": []
 }

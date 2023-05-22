@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -6,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { type z } from "zod";
 import { UserRegisterSchema } from "../model/UserFormTypes";
 import { UserApiHandler } from "../service/ApiClients";
+import { ACTIVE_USER_KEY } from "../model/User";
 
 type FormUser = z.infer<typeof UserRegisterSchema>;
 
@@ -35,14 +35,11 @@ export const RegisterForm = () => {
 
 		if (userResp.success === false) {
 			setRespErrorMsg(userResp.error);
-		} else {
-			sessionStorage.setItem(
-				"active-user",
-				JSON.stringify(userResp.data)
-			);
-
-			navigate("/");
+			return;
 		}
+
+		sessionStorage.setItem(ACTIVE_USER_KEY, JSON.stringify(userResp.data));
+		navigate("/");
 	};
 	const usernameId = useId();
 	const passId = useId();
@@ -50,6 +47,7 @@ export const RegisterForm = () => {
 
 	return (
 		<>
+			{/* eslint-disable @typescript-eslint/no-misused-promises */}
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<label htmlFor={usernameId}>Username:</label>
 				<input id={usernameId} {...register("username")}></input>

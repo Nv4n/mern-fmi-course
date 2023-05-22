@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import { LoginForm } from "./components/LoginForm";
+import { RecipeForm } from "./components/RecipeForm";
 import { RegisterForm } from "./components/RegisterForm";
 import { Layout } from "./pages/Layout";
 
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
 		children: [
 			{ path: "login", element: <LoginForm></LoginForm> },
 			{ path: "register", element: <RegisterForm></RegisterForm> },
+			{ path: "create/recipe", element: <RecipeForm></RecipeForm> },
 		],
 	},
 	{ path: "/api/*", element: <Navigate to={"/"}></Navigate> },
