@@ -28,7 +28,6 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
 						<img
 							src={recipe.cookedImg}
 							alt="Finished meal"
-							// loading="lazy"
 							width={300}
 							height={300}
 						></img>
@@ -47,9 +46,11 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
 					})}
 				</div>
 			</Link>
-			{activeUser && activeUser.id === recipe.authorId ? (
+			{activeUser &&
+			(activeUser.id === recipe.authorId ||
+				activeUser.role === "admin") ? (
 				<>
-					<Link to={"/"} className="nav-link">
+					<Link to={`/recipe/edit/${recipe.id}`} className="nav-link">
 						EDIT
 					</Link>
 

@@ -20,6 +20,7 @@ const router = createBrowserRouter([
 			{ path: "login", element: <LoginForm></LoginForm> },
 			{ path: "register", element: <RegisterForm></RegisterForm> },
 			{ path: "recipe/create", element: <RecipeForm></RecipeForm> },
+			{ path: "recipe/edit/:id", element: <RecipeForm></RecipeForm> },
 			{ path: "recipe/:id", element: <RecipeDetails></RecipeDetails> },
 		],
 	},

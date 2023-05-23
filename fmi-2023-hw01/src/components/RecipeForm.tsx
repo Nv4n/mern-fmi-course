@@ -1,19 +1,33 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { type z } from "zod";
+import useFetchRecipe from "../hooks/useFetchRecipe";
+import { type Recipe } from "../model/Recipe";
 import { RecipeFormSchema } from "../model/RecipeFormTypes";
 import { ActiveUserContext } from "../pages/Layout";
 import { RecipeApiHandler } from "../service/RecipeApi";
 
 export type FormRecipe = z.infer<typeof RecipeFormSchema>;
 
+function isKeyOfRecipe(key: string, recipe: Recipe): key is keyof FormRecipe {
+	return key in recipe;
+}
+
 export const RecipeForm = () => {
 	const [respErrorMsg, setRespErrorMsg] = useState<string | null>(null);
+	const { id } = useParams();
+	const recipe: Recipe | undefined = useFetchRecipe(id);
+	const { pathname } = useLocation();
+	const formType = pathname.startsWith("/recipe/create/")
+		? "create"
+		: pathname.startsWith("/recipe/edit/")
+		? "edit"
+		: "invalid";
+
 	const navigate = useNavigate();
 	const activeUser = useContext(ActiveUserContext);
-
 	useEffect(() => {
 		if (!activeUser) {
 			navigate("/");
@@ -23,11 +37,36 @@ export const RecipeForm = () => {
 	const {
 		register,
 		handleSubmit,
+		setValue,
+		reset,
 		formState: { errors },
 	} = useForm<FormRecipe>({
 		resolver: zodResolver(RecipeFormSchema),
 		mode: "onTouched",
 	});
+
+	useEffect(() => {
+		if (!recipe) {
+			reset();
+			return;
+		}
+		const defaultValues = {
+			title: recipe.title,
+			shortDescription: recipe.shortDescription,
+			cookingTime: recipe.cookingTime.toString(),
+			products: recipe.products.join(", "),
+			cookedImg: recipe.cookedImg,
+			description: recipe.description,
+			tags: recipe.tags.join(", "),
+		};
+
+		for (const key in defaultValues) {
+			if (isKeyOfRecipe(key, recipe)) {
+				setValue(key, defaultValues[key]);
+			}
+		}
+	}, [recipe]);
+
 	const generateInput = (
 		label: string,
 		field: keyof FormRecipe,
@@ -59,13 +98,39 @@ export const RecipeForm = () => {
 			setRespErrorMsg("No active user");
 			return;
 		}
-		const resp = await RecipeApiHandler.createRecipe(data, activeUser.id);
-		if (resp.success === false) {
-			setRespErrorMsg(resp.error);
-			return;
+		if (formType === "create") {
+			const resp = await RecipeApiHandler.createRecipe(
+				data,
+				activeUser.id
+			);
+			if (resp.success === false) {
+				setRespErrorMsg(resp.error);
+				return;
+			}
+			navigate("/");
 		}
+		if (formType === "edit") {
+			if (!recipe) {
+				setRespErrorMsg("No such recipe");
+				return;
+			}
+			const entity: Recipe = {
+				id: recipe.id,
+				authorId: recipe.authorId,
+				publishedAt: new Date(recipe.publishedAt),
+				lastUpdated: new Date(),
+				...data,
+			};
 
-		navigate("/");
+			const resp = await RecipeApiHandler.updateRecipe(entity);
+
+			if (resp.success === false) {
+				setRespErrorMsg(resp.error);
+				return;
+			}
+			console.log(resp.data);
+			navigate("/");
+		}
 	};
 
 	return (

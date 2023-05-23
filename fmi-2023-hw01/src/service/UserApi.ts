@@ -8,15 +8,28 @@ import {
 } from "./ApiClients";
 
 interface UserApi {
+	findAll: () => Promise<ApiResponse<User[]>>;
 	findUserById: (id: string) => Promise<ApiResponse<User>>;
 	findUser: (username: string) => Promise<ApiResponse<User>>;
 	createUser: (
 		username: string,
 		password: string
 	) => Promise<ApiResponse<User>>;
+	deleteUser: (id: string) => Promise<ApiResponse<boolean>>;
 }
 
 export const UserApiHandler: UserApi = {
+	findAll: async function (): Promise<ApiResponse<User[]>> {
+		try {
+			const users = await handleRequest<User[]>(`${BASE_API_URL}/users`);
+			if (users) {
+				return { success: true, data: users };
+			}
+			return { success: false, error: "No users found" };
+		} catch (err) {
+			return { success: false, error: "Failed request" };
+		}
+	},
 	findUser: async function (username: string): Promise<ApiResponse<User>> {
 		try {
 			const users = await handleRequest<User[]>(`${BASE_API_URL}/users`);
@@ -92,6 +105,16 @@ export const UserApiHandler: UserApi = {
 				body: JSON.stringify(entity),
 			});
 			return { success: true, data: entity };
+		} catch (err) {
+			return { success: false, error: "Failed request" };
+		}
+	},
+	deleteUser: async function (id: string): Promise<ApiResponse<boolean>> {
+		try {
+			await handleRequest(`${BASE_API_URL}/users/${id}`, {
+				method: "DELETE",
+			});
+			return { success: true, data: true };
 		} catch (err) {
 			return { success: false, error: "Failed request" };
 		}

@@ -22,7 +22,7 @@ export const RecipePage = () => {
 					}
 				});
 
-				setRecipes(data);
+				setRecipes(data.slice(0, 10));
 			}
 		};
 		void fetchData();

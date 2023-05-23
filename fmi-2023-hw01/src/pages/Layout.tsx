@@ -30,6 +30,9 @@ export const Layout = () => {
 						<Link to={"recipe/create/"} className="nav-link">
 							Add recipe
 						</Link>
+						{user.role === "admin" ? (
+							<Link to={"/user/list"}>Dashboard</Link>
+						) : null}
 					</>
 				) : (
 					<>

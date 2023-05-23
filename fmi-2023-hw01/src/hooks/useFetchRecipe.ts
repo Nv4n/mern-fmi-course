@@ -14,6 +14,8 @@ export default function useFetchRecipe(id: string | undefined) {
 				}
 
 				setRecipe(() => resp.data.find((r) => r.id === id));
+			} else {
+				setRecipe(undefined);
 			}
 		};
 		void fetchData();
