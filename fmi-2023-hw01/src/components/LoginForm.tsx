@@ -45,6 +45,10 @@ export const LoginForm = () => {
 			return;
 		}
 
+		if (resp.data.validationStatus !== "active") {
+			setRespErrorMsg(`User is ${resp.data.validationStatus}`);
+			return;
+		}
 		sessionStorage.setItem(ACTIVE_USER_KEY, JSON.stringify(resp.data));
 		navigate("/");
 	};
@@ -53,11 +57,11 @@ export const LoginForm = () => {
 		<>
 			{/* eslint-disable @typescript-eslint/no-misused-promises */}
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<label htmlFor={usernameId}>Username:</label>
+				<label htmlFor={usernameId}>Username: </label>
 				<input id={usernameId} {...register("username")}></input>
 				<p>{errors.username?.message}</p>
 				<br></br>
-				<label htmlFor={passId}>Password:</label>
+				<label htmlFor={passId}>Password: </label>
 				<input
 					id={passId}
 					type="password"

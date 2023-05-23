@@ -31,7 +31,9 @@ export const Layout = () => {
 							Add recipe
 						</Link>
 						{user.role === "admin" ? (
-							<Link to={"/user/list"}>Dashboard</Link>
+							<Link to={"/user/list"} className="nav-link">
+								Dashboard
+							</Link>
 						) : null}
 					</>
 				) : (
@@ -44,7 +46,7 @@ export const Layout = () => {
 						</Link>
 					</>
 				)}
-				{pathname.startsWith("/recipe/") ? (
+				{!pathname.match(/^\/^/) ? (
 					<>
 						{" "}
 						<Link to={"/"} className="nav-link">
@@ -57,7 +59,9 @@ export const Layout = () => {
 						<span>
 							<b>{`HI ${user.username}`}</b>
 						</span>
-						<img src={user.avatar} alt="Avatar image"></img>
+						<Suspense fallback={<span>Loading...</span>}>
+							<img src={user.avatar} alt="Avatar image"></img>
+						</Suspense>
 					</div>
 				)}
 				<Suspense fallback={<h2>Loading...</h2>}>

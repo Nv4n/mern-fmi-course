@@ -10,6 +10,8 @@ import { RegisterForm } from "./components/RegisterForm";
 import { Layout } from "./pages/Layout";
 import { RecipeDetails } from "./pages/RecipeDetails";
 import { RecipePage } from "./pages/RecipesPage";
+import { Dashboard } from "./pages/Dashboard";
+import { UserEditForm } from "./components/UserEditForm";
 
 const router = createBrowserRouter([
 	{
@@ -22,6 +24,8 @@ const router = createBrowserRouter([
 			{ path: "recipe/create", element: <RecipeForm></RecipeForm> },
 			{ path: "recipe/edit/:id", element: <RecipeForm></RecipeForm> },
 			{ path: "recipe/:id", element: <RecipeDetails></RecipeDetails> },
+			{ path: "user/edit/:id", element: <UserEditForm></UserEditForm> },
+			{ path: "user/list", element: <Dashboard></Dashboard> },
 		],
 	},
 	{ path: "/api/*", element: <Navigate to={"/"}></Navigate> },

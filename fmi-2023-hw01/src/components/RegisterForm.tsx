@@ -58,11 +58,11 @@ export const RegisterForm = () => {
 		<>
 			{/* eslint-disable @typescript-eslint/no-misused-promises */}
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<label htmlFor={usernameId}>Username:</label>
+				<label htmlFor={usernameId}>Username: </label>
 				<input id={usernameId} {...register("username")}></input>
 				<p>{errors.username?.message}</p>
 				<br></br>
-				<label htmlFor={passId}>Password:</label>
+				<label htmlFor={passId}>Password: </label>
 				<input
 					id={passId}
 					type="password"
@@ -70,7 +70,7 @@ export const RegisterForm = () => {
 				></input>
 				<p>{errors.password?.message}</p>
 				<br></br>
-				<label htmlFor={passId}>Re-Password</label>
+				<label htmlFor={passId}>Re-Password: </label>
 				<input
 					id={rePassId}
 					type="password"

@@ -38,6 +38,19 @@
       "validationStatus": "active",
       "registeredAt": "2023-05-23T12:18:14.284Z",
       "lastUpdatedAt": "2023-05-23T12:18:14.284Z"
+    },
+    {
+      "id": "V0IXwVO7IWBnuwFCRex1VNlu",
+      "name": "Default Name",
+      "username": "bot",
+      "password": "1234admin^",
+      "gender": "male",
+      "role": "user",
+      "avatar": "/static/media/male.214c16495943ca762a6f17d3c0e48923.svg",
+      "description": "no description",
+      "validationStatus": "suspended",
+      "registeredAt": "2023-05-23T13:11:46.467Z",
+      "lastUpdatedAt": "2023-05-23T13:11:46.467Z"
     }
   ],
   "recipes": [
