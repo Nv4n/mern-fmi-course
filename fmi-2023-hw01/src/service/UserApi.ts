@@ -16,6 +16,7 @@ interface UserApi {
 		password: string
 	) => Promise<ApiResponse<User>>;
 	deleteUser: (id: string) => Promise<ApiResponse<boolean>>;
+	updateUser: (data: User) => Promise<ApiResponse<User>>;
 }
 
 export const UserApiHandler: UserApi = {
@@ -117,6 +118,27 @@ export const UserApiHandler: UserApi = {
 			return { success: true, data: true };
 		} catch (err) {
 			return { success: false, error: "Failed request" };
+		}
+	},
+	updateUser: async function (data: User): Promise<ApiResponse<User>> {
+		console.table(data);
+		const resp = UserSchema.safeParse(data);
+		if (resp.success === false) {
+			return { success: false, error: resp.error.message };
+		}
+		const entity = resp.data;
+
+		try {
+			await handleRequest<User>(`${BASE_API_URL}/users/${entity.id}`, {
+				method: "PUT",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify(entity),
+			});
+			return { success: true, data: entity };
+		} catch (err) {
+			return { success: false, error: "Request failed" };
 		}
 	},
 };

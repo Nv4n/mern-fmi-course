@@ -9,9 +9,9 @@
       "role": "user",
       "avatar": "/static/media/male.214c16495943ca762a6f17d3c0e48923.svg",
       "description": "no description",
-      "validationStatus": "active",
+      "validationStatus": "suspended",
       "registeredAt": "2023-05-22T13:01:08.239Z",
-      "lastUpdatedAt": "2023-05-22T13:01:08.239Z"
+      "lastUpdatedAt": "2023-05-23T14:03:08.669Z"
     },
     {
       "id": "EYyhPar23M39RoGNi17n9xxv",
@@ -44,13 +44,13 @@
       "name": "Default Name",
       "username": "bot",
       "password": "1234admin^",
-      "gender": "male",
+      "gender": "female",
       "role": "user",
-      "avatar": "/static/media/male.214c16495943ca762a6f17d3c0e48923.svg",
+      "avatar": "/static/media/female.9c6a5a25faafc8f0f1438bebfb98933e.svg",
       "description": "no description",
-      "validationStatus": "suspended",
+      "validationStatus": "active",
       "registeredAt": "2023-05-23T13:11:46.467Z",
-      "lastUpdatedAt": "2023-05-23T13:11:46.467Z"
+      "lastUpdatedAt": "2023-05-23T14:02:43.358Z"
     }
   ],
   "recipes": [
