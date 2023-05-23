@@ -11,20 +11,33 @@ export const RecipePage = () => {
 			if (resp.success === false) {
 				console.log(resp.error);
 			} else {
-				setRecipes(resp.data);
+				const data = [...resp.data];
+				data.sort((a, b) => {
+					if (a.publishedAt < b.publishedAt) {
+						return 1;
+					} else if (a.publishedAt > b.publishedAt) {
+						return -1;
+					} else {
+						return 0;
+					}
+				});
+
+				setRecipes(data);
 			}
 		};
 		void fetchData();
 	}, []);
-	console.log(recipes);
 
 	return (
 		<div>
 			{recipes.map((recipe) => {
 				return (
 					<>
-						<Suspense key={recipe.id} fallback={<p>Loading...</p>}>
-							<RecipeCard recipe={recipe}></RecipeCard>
+						<Suspense fallback={<p>Loading...</p>}>
+							<RecipeCard
+								key={recipe.id}
+								recipe={recipe}
+							></RecipeCard>
 						</Suspense>
 					</>
 				);

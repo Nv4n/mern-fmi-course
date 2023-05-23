@@ -13,6 +13,7 @@ interface RecipeApi {
 		data: FormRecipe,
 		authorId: string
 	) => Promise<ApiResponse<Recipe>>;
+	deleteRecipe: (id: string) => Promise<ApiResponse<boolean>>;
 }
 
 export const RecipeApiHandler: RecipeApi = {
@@ -56,6 +57,19 @@ export const RecipeApiHandler: RecipeApi = {
 				body: JSON.stringify(entity),
 			});
 			return { success: true, data: entity };
+		} catch (err) {
+			return { success: false, error: "Request failed" };
+		}
+	},
+	deleteRecipe: async function (id: string): Promise<ApiResponse<boolean>> {
+		try {
+			await handleRequest<Recipe>(`${BASE_API_URL}/recipes/${id}`, {
+				method: "DELETE",
+				headers: {
+					"content-type": "application/json",
+				},
+			});
+			return { success: true, data: true };
 		} catch (err) {
 			return { success: false, error: "Request failed" };
 		}

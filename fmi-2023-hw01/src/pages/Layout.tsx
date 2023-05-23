@@ -1,7 +1,6 @@
-import { createContext } from "react";
+import { Suspense, createContext } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ACTIVE_USER_KEY, type User } from "../model/User";
-import { RecipePage } from "./RecipesPage";
 
 export const ActiveUserContext = createContext<User | null>(null);
 export const Layout = () => {
@@ -28,7 +27,9 @@ export const Layout = () => {
 						>
 							Sign out
 						</button>{" "}
-						<Link to={"/create/recipe"}>Add recipe</Link>
+						<Link to={"recipe/create/"} className="nav-link">
+							Add recipe
+						</Link>
 					</>
 				) : (
 					<>
@@ -40,6 +41,14 @@ export const Layout = () => {
 						</Link>
 					</>
 				)}
+				{pathname.startsWith("/recipe/") ? (
+					<>
+						{" "}
+						<Link to={"/"} className="nav-link">
+							Home
+						</Link>
+					</>
+				) : null}
 				{user && (
 					<div>
 						<span>
@@ -48,10 +57,9 @@ export const Layout = () => {
 						<img src={user.avatar} alt="Avatar image"></img>
 					</div>
 				)}
-
-				{pathname === "/" ? <RecipePage></RecipePage> : null}
-
-				<Outlet></Outlet>
+				<Suspense fallback={<h2>Loading...</h2>}>
+					<Outlet></Outlet>
+				</Suspense>
 			</div>
 		</ActiveUserContext.Provider>
 	);

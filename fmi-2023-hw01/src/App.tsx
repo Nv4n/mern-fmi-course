@@ -8,6 +8,7 @@ import { LoginForm } from "./components/LoginForm";
 import { RecipeForm } from "./components/RecipeForm";
 import { RegisterForm } from "./components/RegisterForm";
 import { Layout } from "./pages/Layout";
+import { RecipeDetails } from "./pages/RecipeDetails";
 import { RecipePage } from "./pages/RecipesPage";
 
 const router = createBrowserRouter([
@@ -15,9 +16,11 @@ const router = createBrowserRouter([
 		path: "/*",
 		element: <Layout></Layout>,
 		children: [
+			{ path: "/*", element: <RecipePage></RecipePage> },
 			{ path: "login", element: <LoginForm></LoginForm> },
 			{ path: "register", element: <RegisterForm></RegisterForm> },
-			{ path: "create/recipe", element: <RecipeForm></RecipeForm> },
+			{ path: "recipe/create", element: <RecipeForm></RecipeForm> },
+			{ path: "recipe/:id", element: <RecipeDetails></RecipeDetails> },
 		],
 	},
 	{ path: "/api/*", element: <Navigate to={"/"}></Navigate> },

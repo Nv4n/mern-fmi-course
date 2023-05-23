@@ -1,28 +1,28 @@
-import { Suspense, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Suspense, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { type Recipe } from "../model/Recipe";
-import { type User } from "../model/User";
-import { UserApiHandler } from "../service/UserApi";
-
+import useFetchAuthor from "../hooks/useFetchAuthor";
+import { ActiveUserContext } from "../pages/Layout";
+import { RecipeApiHandler } from "../service/RecipeApi";
 interface RecipeCardProps {
 	recipe: Recipe;
 }
 
 export const RecipeCard = ({ recipe }: RecipeCardProps) => {
-	const [author, setAuthor] = useState<User | null>(null);
-	useEffect(() => {
-		const fetchData = async () => {
-			const resp = await UserApiHandler.findUserById(recipe.authorId);
-			if (resp.success === true) {
-				setAuthor(resp.data);
-			}
-		};
-		void fetchData();
-	}, [recipe]);
+	const author = useFetchAuthor(recipe.authorId);
+	const activeUser = useContext(ActiveUserContext);
+	const navigate = useNavigate();
 
+	const onDelete = async () => {
+		const resp = await RecipeApiHandler.deleteRecipe(recipe.id);
+		if (resp.success === false) {
+			console.log(resp.error);
+		}
+		navigate(0);
+	};
 	return (
-		<>
-			<Link to={`/recipe/${recipe.id}`} className="card">
+		<div className="card">
+			<Link to={`/recipe/${recipe.id}`} className="card-container">
 				<div className="image-container">
 					<Suspense fallback="loading...">
 						<img
@@ -36,8 +36,8 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
 				</div>
 				<div className="info">
 					<h2>{recipe.title}</h2>
-					<p>Author: {author ? author.username : "<deleted user>"}</p>
-					<p>{recipe.shortDescription.slice(150)}</p>
+					<p>Author: {author ? author : "<deleted user>"}</p>
+					<p>{recipe.shortDescription.slice(0, 150)}</p>
 					{recipe.tags.map((tag, index) => {
 						return (
 							<>
@@ -47,6 +47,22 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
 					})}
 				</div>
 			</Link>
-		</>
+			{activeUser && activeUser.id === recipe.authorId ? (
+				<>
+					<Link to={"/"} className="nav-link">
+						EDIT
+					</Link>
+
+					<button
+						className="nav-link"
+						onClick={() => {
+							void onDelete();
+						}}
+					>
+						DELETE
+					</button>
+				</>
+			) : null}
+		</div>
 	);
 };
