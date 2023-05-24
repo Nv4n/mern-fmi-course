@@ -10,8 +10,16 @@ import { z } from "zod";
 
 export const ProductSchema = z.object({
 	id: z.number().positive().int(),
-	info: z.string().max(256),
-	price: z.number().nonnegative(),
+	info: z.string().max(256).nonempty(),
+	price: z
+		.number()
+		.nonnegative()
+		.or(
+			z
+				.string()
+				.transform((val) => parseInt(val))
+				.refine((val) => val >= 0, { message: "Must be non-negative" })
+		),
 	category: z.enum(["Computers", "Phones", "Accessories", "Software"]),
 	img: z.string().url(),
 	tags: z

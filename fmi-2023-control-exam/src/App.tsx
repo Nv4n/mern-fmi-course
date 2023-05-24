@@ -7,16 +7,27 @@ import "./App.css";
 import { ProductForm } from "./components/ProductForm";
 import { Layout } from "./pages/Layout";
 import { Shopping } from "./pages/Shopping";
+import { Dashboard } from "./pages/Dashboard";
+import { Cart } from "./pages/Cart";
 
 const router = createBrowserRouter([
 	{
 		path: "/*",
 		element: <Layout></Layout>,
 		children: [
-			{ path: "/", element: <Shopping></Shopping> },
+			{ path: "/*", element: <Shopping></Shopping> },
+			{ path: "dashboard", element: <Dashboard></Dashboard> },
 			{
 				path: "product/add",
 				element: <ProductForm></ProductForm>,
+			},
+			{
+				path: "product/edit/:id",
+				element: <ProductForm></ProductForm>,
+			},
+			{
+				path: "cart",
+				element: <Cart></Cart>,
 			},
 		],
 	},

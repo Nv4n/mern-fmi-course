@@ -1,4 +1,37 @@
 {
-    "products": [],
-    "orders": []
+  "products": [
+    {
+      "id": 3,
+      "info": "TEST",
+      "price": 50,
+      "category": "Phones",
+      "img": "https://images.unsplash.com/photo-1626218174358-7769486c4b79?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FtaW5nJTIwcGN8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+      "tags": [
+        "TEST"
+      ]
+    },
+    {
+      "id": 4,
+      "info": "mishka",
+      "price": 22,
+      "category": "Accessories",
+      "img": "https://dice.bg/content/pics/56981_ugreen-silent-wireless-mouse-24g-ergonomichna-bezjichna-mishka-za-mac-i-pc-siv_2443175952.jpg",
+      "tags": [
+        "mouse",
+        "high_resolution"
+      ]
+    },
+    {
+      "id": 5,
+      "info": "keyboard",
+      "price": 53,
+      "category": "Accessories",
+      "img": "https://resource.logitech.com/content/dam/logitech/en/products/keyboards/mx-mechanical/gallery/mx-mechanical-keyboard-top-view-graphite-pan.png",
+      "tags": [
+        "keyboard",
+        "mechanical"
+      ]
+    }
+  ],
+  "orders": []
 }
