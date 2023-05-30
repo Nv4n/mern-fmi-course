@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { type z } from "zod";
 import useFetchUser from "../hooks/useFetchUser";
-import { type User } from "../model/User";
+import { ValidationStatuses, type User, Genders, Roles } from "../model/User";
 import { UserEditSchema } from "../model/UserFormTypes";
 import { ActiveUserContext } from "../pages/Layout";
 import { UserApiHandler } from "../service/UserApi";
@@ -72,7 +72,10 @@ export const UserEditForm = () => {
 			<>
 				<label htmlFor={id}>{label}: </label>
 				{inputType ? (
-					<textarea {...register(field)} id={id} />
+					<>
+						<br></br>
+						<textarea {...register(field)} id={id} />
+					</>
 				) : (
 					<input
 						{...register(field)}
@@ -112,8 +115,12 @@ export const UserEditForm = () => {
 			return;
 		}
 		console.log(resp.data);
-		navigate("/");
+		navigate("/user/list");
 	};
+
+	const validationStatusId = useId();
+	const genderId = useId();
+	const roleId = useId();
 
 	return (
 		<>
@@ -123,9 +130,53 @@ export const UserEditForm = () => {
 				{generateInput("Name", "name")}
 				{generateInput("Username", "username")}
 				{generateInput("Password", "password")}
-				{generateInput("Gender", "gender")}
-				{generateInput("Role", "role")}
-				{generateInput("Validation Status", "validationStatus")}
+				{user && (
+					<>
+						<label htmlFor={genderId}>Gender:</label>{" "}
+						<select id={genderId} {...register("gender")}>
+							{Genders.map((gender) => (
+								<option key={gender} value={gender}>
+									{gender}
+								</option>
+							))}
+						</select>
+						<p>{errors["gender"]?.message}</p>
+						<br></br>
+					</>
+				)}
+				{user && (
+					<>
+						<label htmlFor={roleId}>Role:</label>{" "}
+						<select id={roleId} {...register("role")}>
+							{Roles.map((role) => (
+								<option key={role} value={role}>
+									{role}
+								</option>
+							))}
+						</select>
+						<p>{errors["role"]?.message}</p>
+						<br></br>
+					</>
+				)}
+				{user && (
+					<>
+						<label htmlFor={validationStatusId}>
+							Validation Status:
+						</label>{" "}
+						<select
+							id={validationStatusId}
+							{...register("validationStatus")}
+						>
+							{ValidationStatuses.map((status) => (
+								<option key={status} value={status}>
+									{status}
+								</option>
+							))}
+						</select>
+						<p>{errors["validationStatus"]?.message}</p>
+						<br></br>
+					</>
+				)}
 				{generateInput(
 					"Description",
 					"description",

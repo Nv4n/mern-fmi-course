@@ -36,7 +36,10 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
 				<div className="info">
 					<h2>{recipe.title}</h2>
 					<p>Author: {author ? author : "<deleted user>"}</p>
-					<p>{recipe.shortDescription.slice(0, 150)}</p>
+					<p>
+						{recipe.shortDescription.slice(0, 150)}
+						{recipe.shortDescription.length > 150 ? "..." : ""}
+					</p>
 					{recipe.tags.map((tag, index) => {
 						return (
 							<>

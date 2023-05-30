@@ -15,6 +15,14 @@ import maleSVG from "../static/male.svg";
 // дата и час на регистрация (генерира се автоматично);
 // дата и час на последна модификация (генерира се автоматично);
 
+export const Genders = ["female", "male"] as const;
+export const Roles = ["user", "admin"] as const;
+export const ValidationStatuses = [
+	"active",
+	"suspended",
+	"deactivated",
+] as const;
+
 export const UserObjSchema = z.object({
 	id: z
 		.string()
@@ -32,11 +40,11 @@ export const UserObjSchema = z.object({
 			/^(?=.*[0-9])(?=.*[^0-9a-zA-Zа-я А-я]).{8,}$/,
 			"Must have at least 1 digit and symbol"
 		),
-	gender: z.enum(["female", "male"]),
-	role: z.enum(["user", "admin"]),
+	gender: z.enum(Genders),
+	role: z.enum(Roles),
 	avatar: z.string().url().or(z.string()),
 	description: z.string().max(512),
-	validationStatus: z.enum(["active", "suspended", "deactivated"]),
+	validationStatus: z.enum(ValidationStatuses),
 	registeredAt: z.date().default(() => new Date()),
 	lastUpdatedAt: z.date().default(() => new Date()),
 });

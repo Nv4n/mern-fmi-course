@@ -34,7 +34,7 @@ export const RecipeSchema = z.object({
 	products: z
 		.string()
 		.regex(
-			/^(\w+, )*\w+$/,
+			/^(([a-zA-Z0-9А-Яа-я_] ?)+, )*([a-zA-Z0-9А-Яа-я_] ?)+$/,
 			"Products must be in format: product1, product2"
 		)
 		.transform((val) => val.split(", "))

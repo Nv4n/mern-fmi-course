@@ -11,7 +11,7 @@
       "description": "no description",
       "validationStatus": "suspended",
       "registeredAt": "2023-05-22T13:01:08.239Z",
-      "lastUpdatedAt": "2023-05-23T14:03:08.669Z"
+      "lastUpdatedAt": "2023-05-30T10:44:21.680Z"
     },
     {
       "id": "EYyhPar23M39RoGNi17n9xxv",
@@ -51,6 +51,19 @@
       "validationStatus": "active",
       "registeredAt": "2023-05-23T13:11:46.467Z",
       "lastUpdatedAt": "2023-05-23T14:02:43.358Z"
+    },
+    {
+      "id": "eGYKwaMO0CXtA3iuVscTdr7V",
+      "name": "Default Name",
+      "username": "pesho",
+      "password": "1234admin^",
+      "gender": "male",
+      "role": "user",
+      "avatar": "/static/media/male.214c16495943ca762a6f17d3c0e48923.svg",
+      "description": "no description",
+      "validationStatus": "active",
+      "registeredAt": "2023-05-30T12:30:49.689Z",
+      "lastUpdatedAt": "2023-05-30T12:30:49.689Z"
     }
   ],
   "recipes": [
@@ -280,6 +293,45 @@
       ],
       "publishedAt": "2023-05-23T12:31:48.584Z",
       "lastUpdated": "2023-05-23T12:31:48.585Z"
+    },
+    {
+      "id": "WOdVrH12UEgyzAOmKG0WvKrk",
+      "authorId": "V0IXwVO7IWBnuwFCRex1VNlu",
+      "title": "Bot recipe",
+      "shortDescription": "Lorem. ereEos minus facilis fugit quidem. Ea ratione totam debitis ad mollitia veritatis!amet, consectetur adipisicing elit. Earum aliquid id in minima facere, a sint quo iste. Eos minus facilis fugit quidem. Ea ratione totam debitis ad mollitia veritatis!",
+      "cookingTime": 15,
+      "products": [
+        "product1",
+        "product2"
+      ],
+      "cookedImg": "https://assets.bonappetit.com/photos/61b775620fb3fcc4cbf036c1/3:2/w_3000,h_2000,c_limit/20211208%20Spaghetti%20Squash%20with%20Tomato%20Sauce%20and%20Mozarella%20LEDE.jpg",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum aliquid id in minima facere, a sint quo iste. Eos minus facilis fugit quidem. Ea ratione totam debitis ad mollitia veritatis!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum aliquid id in minima facere, a sint quo iste. Eos minus facilis fugit quidem. Ea ratione totam debitis ad mollitia veritatis!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum aliquid id in minima facere, a sint quo iste. Eos minus facilis fugit quidem. Ea ratione totam debitis ad mollitia veritatis!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum aliquid id in minima facere, a sint quo iste. Eos minus facilis fugit quidem. Ea ratione totam debitis ad mollitia veritatis!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum aliquid id in minima facere, a sint quo iste. Eos minus facilis fugit quidem. Ea ratione totam debitis ad mollitia veritatis!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum aliquid id in minima facere, a sint quo iste. Eos minus facilis fugit quidem. Ea ratione totam debitis ad mollitia veritatis!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum aliquid id in minima facere, a sint quo iste. Eos minus facilis fugit quidem. Ea ratione totam debitis ad mollitia veritatis!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum aliquid id in minima facere, a sint quo iste. Eos minus facilis fugit quidem. Ea ratione totam debitis ad mollitia veritatis!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum aliquid id in minima facere, a sint quo iste. Eos minus facilis fugit quidem. Ea ratione totam debitis ad mollitia veritatis!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum aliquid id in minima facere, a sint quo iste. Eos minus facilis fugit quidem. Ea ratione totam debitis ad mollitia veritatis!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum aliquid id in minima ",
+      "tags": [
+        "TAG1"
+      ],
+      "publishedAt": "2023-05-30T10:49:32.522Z",
+      "lastUpdated": "2023-05-30T10:49:32.522Z"
+    },
+    {
+      "id": "W9lQ9Iv9kGz8CKHmONqG3yfW",
+      "authorId": "eGYKwaMO0CXtA3iuVscTdr7V",
+      "title": "Баница",
+      "shortDescription": "Вкусна баница",
+      "cookingTime": 155,
+      "products": [
+        "кори за баница",
+        "сирене"
+      ],
+      "cookedImg": "https://recepti.gotvach.bg/files/1200x800/nai-balgarska-banica.webp",
+      "description": "Много вкусна рецепта за баница",
+      "tags": [
+        "banica",
+        "sirene",
+        "pechene",
+        "tag1"
+      ],
+      "publishedAt": "2023-05-30T12:36:18.180Z",
+      "lastUpdated": "2023-05-30T12:36:18.181Z"
     }
   ]
 }

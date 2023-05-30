@@ -28,6 +28,19 @@ export const RecipeDetails = () => {
 							</Suspense>
 							<p>Author: {author ? author : "<deleted user>"}</p>
 							<p>{recipe.description}</p>
+							<div>
+								<span>Products: </span>
+								{recipe.products.map((product) => {
+									return (
+										<>
+											<span>{product}</span>
+											{", "}
+										</>
+									);
+								})}
+							</div>
+
+							<br></br>
 							{recipe.tags.map((tag) => {
 								return (
 									<>
