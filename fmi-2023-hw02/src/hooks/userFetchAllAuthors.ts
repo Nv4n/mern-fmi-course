@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import { type Recipe } from "../model/Recipe";
-import { UserApiHandler } from "../service/UserApi";
+import { type User } from "../model/User";
 
 export type ReturnAuthorsType = { name: string; id: string };
 export default function usetFetchAllAuthors(recipes: Recipe[]) {
 	const [authors, setAuthors] = useState<ReturnAuthorsType[]>([]);
+
 	useEffect(() => {
 		const uniqueAuthors: ReturnAuthorsType[] = [];
 		const fetchUser = async (id: string) => {
-			const resp = await UserApiHandler.findUserById(id);
-			if (resp.success === true) {
-				uniqueAuthors.push({ name: resp.data.username, id: id });
+			const resp = await fetch(`/api/users/${id}`);
+
+			if (resp.status < 300) {
+				const data = resp.json() as Promise<User>;
+				const user = await data;
+				uniqueAuthors.push({ name: user.username, id: id });
 			}
 		};
 		const fetchUsers = async () => {

@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import { type Recipe } from "../model/Recipe";
-import { RecipeApiHandler } from "../service/RecipeApi";
 
 export default function useFetchRecipe(id: string | undefined) {
 	const [recipe, setRecipe] = useState<Recipe | undefined>(undefined);
 	useEffect(() => {
 		const fetchData = async () => {
 			if (id) {
-				const resp = await RecipeApiHandler.findAll();
-				if (resp.success === false) {
-					console.log(resp.error);
-					return;
-				}
+				const resp = await fetch(`/api/recipes/${id}`);
 
-				setRecipe(() => resp.data.find((r) => r.id === id));
+				if (resp.status < 300) {
+					const data = resp.json() as Promise<Recipe>;
+					const recipe = await data;
+					setRecipe(recipe);
+				}
 			} else {
 				setRecipe(undefined);
 			}

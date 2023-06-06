@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { UserApiHandler } from "../service/UserApi";
+import { type User } from "../model/User";
 
 export default function useFetchAuthor(id: string | undefined) {
 	const [author, setAuthor] = useState<string | null>(null);
 	useEffect(() => {
 		const fetchData = async () => {
 			if (id) {
-				const resp = await UserApiHandler.findUserById(id);
-				if (resp.success === true) {
-					setAuthor(resp.data.username);
+				const resp = await fetch(`/api/users/${id}`);
+				if (resp.status < 300) {
+					const data = (await resp.json()) as Promise<User>;
+					const author = (await data).username;
+					setAuthor(author);
 				}
 			}
 		};
