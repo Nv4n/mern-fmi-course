@@ -1,6 +1,7 @@
 import { z } from "zod";
 import femaleSVG from "../static/female.svg";
 import maleSVG from "../static/male.svg";
+import { IdSchema } from "./DefaultSchemas";
 
 // User requirements
 // идентификатор на записа (до 24 символа);
@@ -24,10 +25,7 @@ export const ValidationStatuses = [
 ] as const;
 
 export const UserObjSchema = z.object({
-	id: z
-		.string()
-		.max(24)
-		.regex(/^[a-zA-Z0-9]{1,24}$/),
+	id: IdSchema,
 	name: z.string(),
 	username: z
 		.string()

@@ -1,4 +1,4 @@
-import { Suspense, createContext } from "react";
+import { Suspense, createContext, useEffect } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ACTIVE_USER_KEY, type User } from "../model/User";
 
@@ -12,6 +12,14 @@ export const Layout = () => {
 
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
+	useEffect(() => {
+		const fetchData = async () => {
+			const resp = await fetch("/api/test");
+			const data = resp.json();
+			console.log(data);
+		};
+		void fetchData();
+	}, []);
 
 	return (
 		<ActiveUserContext.Provider value={user}>

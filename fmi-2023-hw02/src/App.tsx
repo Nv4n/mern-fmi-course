@@ -28,7 +28,7 @@ const router = createBrowserRouter([
 			{ path: "user/list", element: <Dashboard></Dashboard> },
 		],
 	},
-	// { path: "/api/*", element: <Navigate to={"/"}></Navigate> },
+	{ path: "/api/*", element: <Navigate to={"/"}></Navigate> },
 ]);
 
 function App() {
