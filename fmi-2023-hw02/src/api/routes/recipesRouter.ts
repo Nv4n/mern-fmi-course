@@ -104,15 +104,9 @@ recipesRouter.delete(
 	asyncHandler(async (req: Request, res: Response) => {
 		try {
 			const db = await connectDb();
-			const id = new ObjectId(req.params.recipeId);
-			const parsedId = DeleteRecipeSchema.safeParse(id);
-			if (parsedId.success === false) {
-				console.error("Error parsing recipeId:", parsedId.error);
-				res.status(500).json({ message: "Internal server error" });
-				return;
-			}
+			const recipeId = new ObjectId(req.params.recipeId).toString();
 			const collection = db.collection(collName);
-			const result = await collection.deleteOne(parsedId.data);
+			const result = await collection.deleteOne({ id: recipeId });
 			console.log(`${result.deletedCount} recipes deleted`);
 
 			res.status(200).send("success");
@@ -130,7 +124,7 @@ recipesRouter.put(
 	asyncHandler(async (req: Request, res: Response) => {
 		try {
 			const db = await connectDb();
-			const recipeId = new ObjectId(req.params.recipeId);
+			const recipeId = new ObjectId(req.params.recipeId).toString();
 			const body = BodySchema.safeParse(req.body);
 			if (body.success === false) {
 				console.error("Body is not a string", body.error);
@@ -157,10 +151,7 @@ recipesRouter.put(
 				return;
 			}
 			const collection = db.collection<Recipe>(collName);
-			const result = await collection.replaceOne(
-				{ id: recipeId },
-				parsedUpdatedRecipe
-			);
+			await collection.replaceOne({ id: recipeId }, parsedUpdatedRecipe);
 
 			res.status(200).send("success");
 		} catch (error) {

@@ -1,4 +1,7 @@
 import { ObjectId } from "mongodb";
 import z from "zod";
 
-export const IdSchema = z.instanceof(ObjectId).default(() => new ObjectId());
+export const IdSchema = z.string().default(() => {
+	const val = new ObjectId();
+	return val.toString();
+});

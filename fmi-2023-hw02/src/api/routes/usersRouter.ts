@@ -69,7 +69,7 @@ userRouter.get(
 	asyncHandler(async (req: Request, res: Response) => {
 		try {
 			const db = await connectDb();
-			const userId = new ObjectId(req.params.userId);
+			const userId = new ObjectId(req.params.userId).toString();
 			const user = await db
 				.collection<User>(collName)
 				.findOne({ id: userId });
@@ -151,15 +151,10 @@ userRouter.delete(
 	asyncHandler(async (req: Request, res: Response) => {
 		try {
 			const db = await connectDb();
-			const id = req.params.id;
-			const parsedId = DeleteUserSchema.safeParse(id);
-			if (parsedId.success === false) {
-				console.error("Error parsing recipeId:", parsedId.error);
-				res.status(500).json({ message: "Internal server error" });
-				return;
-			}
+			const userId = new ObjectId(req.params.id).toString();
+
 			const collection = db.collection(collName);
-			const result = await collection.deleteOne(parsedId.data);
+			const result = await collection.deleteOne({ id: userId });
 			console.log(`${result.deletedCount} users deleted`);
 
 			res.status(200).send("success");
@@ -177,7 +172,7 @@ userRouter.put(
 	asyncHandler(async (req: Request, res: Response) => {
 		try {
 			const db = await connectDb();
-			const userId = new ObjectId(req.params.userId);
+			const userId = new ObjectId(req.params.userId).toString();
 			const body = BodySchema.safeParse(req.body);
 			if (body.success === false) {
 				console.error("Body is not a string", body.error);
@@ -200,15 +195,7 @@ userRouter.put(
 			const parsedUpdatedUser = parsedBody.data.user;
 
 			const collection = db.collection<User>(collName);
-			const result = await collection.replaceOne(
-				{ id: userId },
-				parsedUpdatedRecipe
-			);
-			if (result.upsertedId) {
-				console.log(
-					`Recipe with id: ${result.upsertedId.toString()} updated`
-				);
-			}
+			await collection.replaceOne({ id: userId }, parsedUpdatedUser);
 
 			res.status(200).send("success");
 		} catch (error) {
