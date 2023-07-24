@@ -44,7 +44,9 @@ export const RecipeDetails = () => {
 							{recipe.tags.map((tag) => {
 								return (
 									<>
-										<span>{tag}</span>{" "}
+										<span className="tag" key={tag}>
+											{tag}
+										</span>{" "}
 									</>
 								);
 							})}

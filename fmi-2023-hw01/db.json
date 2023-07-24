@@ -64,6 +64,19 @@
       "validationStatus": "active",
       "registeredAt": "2023-05-30T12:30:49.689Z",
       "lastUpdatedAt": "2023-05-30T12:30:49.689Z"
+    },
+    {
+      "id": "ZjY67QQ53icoD9S4l05kiiwd",
+      "name": "Default Name",
+      "username": "trayan",
+      "password": "1234admin^",
+      "gender": "male",
+      "role": "user",
+      "avatar": "/static/media/male.214c16495943ca762a6f17d3c0e48923.svg",
+      "description": "no description",
+      "validationStatus": "active",
+      "registeredAt": "2023-06-06T18:21:05.414Z",
+      "lastUpdatedAt": "2023-06-06T18:21:05.414Z"
     }
   ],
   "recipes": [
@@ -332,6 +345,29 @@
       ],
       "publishedAt": "2023-05-30T12:36:18.180Z",
       "lastUpdated": "2023-05-30T12:36:18.181Z"
+    },
+    {
+      "id": "i1yb94xMeMS6QtuDtw6uCvGQ",
+      "authorId": "ZjY67QQ53icoD9S4l05kiiwd",
+      "title": "shopska salata",
+      "shortDescription": "For the first time the term \"Shopska salad\" was used in a Bulgarian cookbook from 1940. It was actually used for a recipe of some kind of lyutenitsa, and had nothing to do with the subsequent use of this designation.[9] The salad was created as a",
+      "cookingTime": 19,
+      "products": [
+        "sirene",
+        "krastavici",
+        "domati",
+        "onion",
+        "chuska"
+      ],
+      "cookedImg": "https://upload.wikimedia.org/wikipedia/commons/0/09/Chopska.jpg",
+      "description": "For the first time the term \"Shopska salad\" was used in a Bulgarian cookbook from 1940. It was actually used for a recipe of some kind of lyutenitsa, and had nothing to do with the subsequent use of this designation.[9] The salad was created as a culinary product in the state tourist agency \"Balkantourist\" in 1955.[10] Despite the fact that the salad's name comes from the westernmost Bulgarian region called Shopluk, it was actually invented in its easternmost region. The salad appeared at the Black Sea coast, in a resort near Varna, called Druzhba. It can be found in one of the first state-approved cookbooks from 1956 (Sbornik recepti 1956, vol. 1, p. 50).[11] The development and popularization of the salad is attributed to the doyen of Bulgarian tourism Petar Doychev (1924-2019).[12][13][14] It is a product of early organized tourism in Bulgaria, and part of tourist promotion,[15] the only survivor of five or six similar recipes.[16] The ingredients used were chosen in part because they resemble the three colors of the Bulgarian flag, and thus would evoke a national sentiment.[17] The salad had become initially an emblem of the Bulgarian tourism.[18] It was approved as a national culinary symbol during the 1970s and 1980s.[19] In 2014 Shopska salad turned out to be Bulgaria's most recognizable dish in Europe. It was the most popular recipe in a European Parliament initiative called A Taste of Europe.",
+      "tags": [
+        "traditional",
+        "bulgarian",
+        "salad"
+      ],
+      "publishedAt": "2023-06-06T18:22:45.267Z",
+      "lastUpdated": "2023-06-06T18:24:50.824Z"
     }
   ]
 }

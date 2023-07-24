@@ -27,7 +27,7 @@ export const RegisterForm = () => {
 		formState: { errors },
 	} = useForm<FormUser>({
 		resolver: zodResolver(UserRegisterSchema),
-		mode: "onTouched",
+		mode: "onChange",
 	});
 
 	const onSubmit = async (data: FormUser) => {
@@ -65,7 +65,7 @@ export const RegisterForm = () => {
 				<label htmlFor={passId}>Password: </label>
 				<input
 					id={passId}
-					type="password"
+					type="text"
 					{...register("password")}
 				></input>
 				<p>{errors.password?.message}</p>
@@ -73,7 +73,7 @@ export const RegisterForm = () => {
 				<label htmlFor={passId}>Re-Password: </label>
 				<input
 					id={rePassId}
-					type="password"
+					type="text"
 					{...register("repassword")}
 				></input>
 				<p>{errors.repassword?.message}</p>

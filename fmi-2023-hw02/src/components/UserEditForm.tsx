@@ -4,12 +4,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { type z } from "zod";
 import useFetchUser from "../hooks/useFetchUser";
-import { ValidationStatuses, type User, Genders, Roles } from "../model/User";
+import { Genders, Roles, ValidationStatuses, type User } from "../model/User";
 import { UserEditSchema } from "../model/UserFormTypes";
 import { ActiveUserContext } from "../pages/Layout";
-import { UserApiHandler } from "../service/UserApi";
-import femaleSVG from "../static/female.svg";
 import maleSVG from "../static/male.svg";
+import femaleSVG from "../static/female.svg";
 
 export type FormUser = z.infer<typeof UserEditSchema>;
 
@@ -108,13 +107,20 @@ export const UserEditForm = () => {
 			...data,
 		};
 
-		const resp = await UserApiHandler.updateUser(entity);
+		const resp = await fetch(`/api/users/${entity.id}`, {
+			method: "PUT",
+			headers: {
+				"content-type": "application/json",
+			},
+			body: JSON.stringify({ user: entity }),
+		});
 
-		if (resp.success === false) {
-			setRespErrorMsg(resp.error);
+		if (resp.status >= 300) {
+			const respData = resp.json() as Promise<{ message: string }>;
+			const err = (await respData).message;
+			setRespErrorMsg(err);
 			return;
 		}
-		console.log(resp.data);
 		navigate("/user/list");
 	};
 

@@ -41,7 +41,15 @@
 	border-radius: 8px;
 	cursor: pointer;
 }
+.nav-link:hover {
+	background-color: antiquewhite;
+}
 
 form {
 	margin: 1rem;
+}
+.tag {
+	padding: 0.1rem 0.25rem;
+	border-radius: 8px;
+	border: 1px solid black;
 }

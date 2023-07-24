@@ -37,7 +37,7 @@ export const UserEditForm = () => {
 		formState: { errors },
 	} = useForm<FormUser>({
 		resolver: zodResolver(UserEditSchema),
-		mode: "onTouched",
+		mode: "onChange",
 	});
 
 	useEffect(() => {

@@ -4,8 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { type z } from "zod";
 import { UserRegisterSchema } from "../model/UserFormTypes";
-import { ACTIVE_USER_KEY } from "../model/User";
-import { UserApiHandler } from "../service/UserApi";
+import { ACTIVE_USER_KEY, type User } from "../model/User";
 import { ActiveUserContext } from "../pages/Layout";
 
 type FormUser = z.infer<typeof UserRegisterSchema>;
@@ -31,23 +30,32 @@ export const RegisterForm = () => {
 	});
 
 	const onSubmit = async (data: FormUser) => {
-		const resp = await UserApiHandler.findUser(data.username);
-		if (resp.success === true) {
+		const resp = await fetch(`/api/users/username/${data.username}`);
+		if (resp.status < 300) {
 			setRespErrorMsg("Username is already taken!");
 			return;
 		}
 
-		const userResp = await UserApiHandler.createUser(
-			data.username,
-			data.password
-		);
-
-		if (userResp.success === false) {
-			setRespErrorMsg(userResp.error);
+		const userResp = await fetch(`/api/users/create`, {
+			method: "POST",
+			headers: {
+				"content-type": "application/json",
+			},
+			body: JSON.stringify({
+				username: data.username,
+				password: data.password,
+			}),
+		});
+		if (userResp.status > 300) {
+			const respData = userResp.json() as Promise<{ message: string }>;
+			const err = (await respData).message;
+			setRespErrorMsg(err);
 			return;
 		}
 
-		sessionStorage.setItem(ACTIVE_USER_KEY, JSON.stringify(userResp.data));
+		const respData = userResp.json() as Promise<User>;
+		const user = await respData;
+		sessionStorage.setItem(ACTIVE_USER_KEY, JSON.stringify(user));
 		navigate("/");
 	};
 	const usernameId = useId();

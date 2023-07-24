@@ -1,6 +1,5 @@
 import { Suspense, useContext, useEffect, useState } from "react";
 import { type User } from "../model/User";
-import { UserApiHandler } from "../service/UserApi";
 import { UserCard } from "../components/UserCard";
 import { ActiveUserContext } from "./Layout";
 import { useNavigate } from "react-router-dom";
@@ -16,11 +15,13 @@ export const Dashboard = () => {
 	const [users, setUsers] = useState<User[]>([]);
 	useEffect(() => {
 		const fetchData = async () => {
-			const resp = await UserApiHandler.findAll();
-			if (resp.success === false) {
+			const resp = await fetch("/api/users");
+			if (resp.status >= 300) {
 				return;
 			}
-			setUsers(resp.data);
+			const respData = resp.json() as Promise<User[]>;
+			const users = await respData;
+			setUsers(users);
 		};
 
 		void fetchData();

@@ -3,9 +3,8 @@ import { useContext, useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { type z } from "zod";
+import { ACTIVE_USER_KEY, type User } from "../model/User";
 import { UserLoginSchema } from "../model/UserFormTypes";
-import { ACTIVE_USER_KEY } from "../model/User";
-import { UserApiHandler } from "../service/UserApi";
 import { ActiveUserContext } from "../pages/Layout";
 
 type FormUser = z.infer<typeof UserLoginSchema>;
@@ -34,22 +33,26 @@ export const LoginForm = () => {
 	const passId = useId();
 
 	const onSubmit = async (data: FormUser) => {
-		const resp = await UserApiHandler.findUser(data.username);
-		if (resp.success === false) {
-			setRespErrorMsg(resp.error);
+		const resp = await fetch(`/api/users/username/${data.username}`);
+		if (resp.status >= 300) {
+			const data = resp.json() as Promise<{ message: string }>;
+			const err = (await data).message;
+			setRespErrorMsg(err);
 			return;
 		}
 
-		if (resp.data.password !== data.password) {
+		const respData = resp.json() as Promise<User>;
+		const user = await respData;
+		if (user.password !== data.password) {
 			setRespErrorMsg("Username or password are wrong");
 			return;
 		}
 
-		if (resp.data.validationStatus !== "active") {
-			setRespErrorMsg(`User is ${resp.data.validationStatus}`);
+		if (user.validationStatus !== "active") {
+			setRespErrorMsg(`User is ${user.validationStatus}`);
 			return;
 		}
-		sessionStorage.setItem(ACTIVE_USER_KEY, JSON.stringify(resp.data));
+		sessionStorage.setItem(ACTIVE_USER_KEY, JSON.stringify(user));
 		navigate("/");
 	};
 

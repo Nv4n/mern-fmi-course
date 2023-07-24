@@ -64,7 +64,7 @@ export const UserSchema = UserObjSchema.refine(
 		if (schema.gender === "male") {
 			return schema.avatar === maleSVG;
 		}
-		return false;
+		return true;
 	},
 	{ message: "Avatar is not URL or isn't appropriate file" }
 );

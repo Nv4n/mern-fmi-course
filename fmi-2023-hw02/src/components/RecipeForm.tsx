@@ -7,7 +7,6 @@ import useFetchRecipe from "../hooks/useFetchRecipe";
 import { type Recipe } from "../model/Recipe";
 import { RecipeFormSchema } from "../model/RecipeFormTypes";
 import { ActiveUserContext } from "../pages/Layout";
-import { RecipeApiHandler } from "../service/RecipeApi";
 
 export type FormRecipe = z.infer<typeof RecipeFormSchema>;
 
@@ -99,12 +98,18 @@ export const RecipeForm = () => {
 			return;
 		}
 		if (formType === "create") {
-			const resp = await RecipeApiHandler.createRecipe(
-				data,
-				activeUser.id
-			);
-			if (resp.success === false) {
-				setRespErrorMsg(resp.error);
+			const resp = await fetch("/api/recipes/create", {
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({ recipe: data, authorId: activeUser.id }),
+			});
+
+			if (resp.status >= 300) {
+				const respData = resp.json() as Promise<{ message: string }>;
+				const err = (await respData).message;
+				setRespErrorMsg(err);
 				return;
 			}
 			navigate("/");
@@ -122,13 +127,20 @@ export const RecipeForm = () => {
 				...data,
 			};
 
-			const resp = await RecipeApiHandler.updateRecipe(entity);
+			const resp = await fetch(`/api/recipes/${entity.id}`, {
+				method: "PUT",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({ recipe: entity }),
+			});
 
-			if (resp.success === false) {
-				setRespErrorMsg(resp.error);
+			if (resp.status >= 300) {
+				const respData = resp.json() as Promise<{ message: string }>;
+				const err = (await respData).message;
+				setRespErrorMsg(err);
 				return;
 			}
-			console.log(resp.data);
 			navigate("/");
 		}
 	};

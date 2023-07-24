@@ -27,7 +27,7 @@ export const LoginForm = () => {
 		formState: { errors },
 	} = useForm<FormUser>({
 		resolver: zodResolver(UserLoginSchema),
-		mode: "onTouched",
+		mode: "onChange",
 	});
 
 	const usernameId = useId();
@@ -64,7 +64,7 @@ export const LoginForm = () => {
 				<label htmlFor={passId}>Password: </label>
 				<input
 					id={passId}
-					type="password"
+					type="text"
 					{...register("password")}
 				></input>
 				<p>{errors.password?.message}</p>

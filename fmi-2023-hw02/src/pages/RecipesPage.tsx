@@ -1,10 +1,9 @@
 import { Suspense, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { Filter } from "../components/Filter";
 import { RecipeCard } from "../components/RecipeCard";
 import usetFetchAllAuthors from "../hooks/userFetchAllAuthors";
 import { type Recipe } from "../model/Recipe";
-import { RecipeApiHandler } from "../service/RecipeApi";
-import { Filter } from "../components/Filter";
-import { useSearchParams } from "react-router-dom";
 
 export const RecipePage = () => {
 	const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -14,11 +13,15 @@ export const RecipePage = () => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const resp = await RecipeApiHandler.findAll();
-			if (resp.success === false) {
-				console.log(resp.error);
+			const resp = await fetch("/api/recipes");
+			if (resp.status >= 300) {
+				const respData = resp.json() as Promise<{ message: string }>;
+				const err = (await respData).message;
+				console.log(err);
 			} else {
-				const data = [...resp.data];
+				const respData = resp.json() as Promise<Recipe[]>;
+				const recipes = await respData;
+				const data = [...recipes];
 				data.sort((a, b) => {
 					if (a.publishedAt < b.publishedAt) {
 						return 1;

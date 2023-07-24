@@ -42,7 +42,7 @@ export const RecipeForm = () => {
 		formState: { errors },
 	} = useForm<FormRecipe>({
 		resolver: zodResolver(RecipeFormSchema),
-		mode: "onTouched",
+		mode: "onChange",
 	});
 
 	useEffect(() => {

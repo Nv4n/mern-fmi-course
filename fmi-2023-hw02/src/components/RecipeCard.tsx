@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { type Recipe } from "../model/Recipe";
 import useFetchAuthor from "../hooks/useFetchAuthor";
 import { ActiveUserContext } from "../pages/Layout";
-import { RecipeApiHandler } from "../service/RecipeApi";
 interface RecipeCardProps {
 	recipe: Recipe;
 }
@@ -14,9 +13,11 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
 	const navigate = useNavigate();
 
 	const onDelete = async () => {
-		const resp = await RecipeApiHandler.deleteRecipe(recipe.id);
-		if (resp.success === false) {
-			console.log(resp.error);
+		const resp = await fetch(`/api/recipes/${recipe.id}`);
+		if (resp.status > 300) {
+			const data = resp.json() as Promise<{ message: string }>;
+			const err = (await data).message;
+			console.log(err);
 		}
 		navigate(0);
 	};

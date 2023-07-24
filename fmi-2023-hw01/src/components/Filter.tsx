@@ -62,8 +62,12 @@ export const Filter = ({ authors, tags }: FilterProps) => {
 				</select>
 				<br></br>
 			</>
-			<button onClick={() => onApply()}>Apply filters</button>{" "}
-			<button onClick={() => onClear()}>Clear filters</button>
+			<button className="nav-link" onClick={() => onApply()}>
+				Apply filters
+			</button>{" "}
+			<button className="nav-link" onClick={() => onClear()}>
+				Clear filters
+			</button>
 		</div>
 	);
 };

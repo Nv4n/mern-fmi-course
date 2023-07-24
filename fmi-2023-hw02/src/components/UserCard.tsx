@@ -1,7 +1,5 @@
-import { Suspense } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { type User } from "../model/User";
-import { UserApiHandler } from "../service/UserApi";
 interface UserCardProps {
 	user: User;
 }
@@ -9,9 +7,13 @@ interface UserCardProps {
 export const UserCard = ({ user }: UserCardProps) => {
 	const navigate = useNavigate();
 	const onDelete = async () => {
-		const resp = await UserApiHandler.deleteUser(user.id);
-		if (resp.success === false) {
-			console.log(resp.error);
+		const resp = await fetch(`/api/users/${user.id}`, {
+			method: "DELETE",
+		});
+		if (resp.status >= 300) {
+			const respData = resp.json() as Promise<{ message: string }>;
+			const err = (await respData).message;
+			console.log(err);
 		}
 		navigate(0);
 	};
@@ -21,13 +23,13 @@ export const UserCard = ({ user }: UserCardProps) => {
 				<span>
 					<b>{user.username}</b>
 				</span>
-				<Suspense fallback={<span>Loading...</span>}>
+				{/* <Suspense fallback={<span>Loading...</span>}>
 					<img
 						src={user.avatar}
 						alt="Avatar image"
 						className="image-container"
 					></img>
-				</Suspense>
+				</Suspense> */}
 			</div>
 
 			<Link to={`/user/edit/${user.id}`} className="nav-link">

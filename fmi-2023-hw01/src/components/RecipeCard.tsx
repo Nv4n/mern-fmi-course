@@ -43,7 +43,9 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
 					{recipe.tags.map((tag, index) => {
 						return (
 							<>
-								<span key={`tag-${index}`}>{tag}</span>{" "}
+								<span className="tag" key={`tag-${index}`}>
+									{tag}
+								</span>{" "}
 							</>
 						);
 					})}
